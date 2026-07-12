@@ -126,6 +126,12 @@ describe('Bitterness Calculations', () => {
     expect(ibu).toBeLessThan(50)
   })
 
+  it('should match real-world IBU for 1oz 5.5% AA hops, 60 min boil, 5 gal batch', () => {
+    const util = bitterness.tinsethUtilization(60, 1.05)
+    const ibu = bitterness.calculateIbu(5.5, 0.0283495, util, 18.9271)
+    expect(ibu).toBeCloseTo(19, 0)
+  })
+
   it('should show utilization increases with time', () => {
     const util30 = bitterness.tinsethUtilization(30, 1.05)
     const util60 = bitterness.tinsethUtilization(60, 1.05)
