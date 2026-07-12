@@ -1,6 +1,6 @@
 import type { BeerXMLStyle } from '../schemas/style.js'
 import type { Style } from '../types/style.js'
-import { parseNumber } from './utils.js'
+import { parseNumber, parseString } from './utils.js'
 
 /**
  * Converts BeerXML Style to TypeScript Style
@@ -10,8 +10,8 @@ export function styleFromXML(xml: BeerXMLStyle): Style {
     name: xml.NAME,
     version: parseNumber(xml.VERSION, 'VERSION') ?? 1,
     category: xml.CATEGORY,
-    categoryNumber: xml.CATEGORY_NUMBER,
-    styleLetter: xml.STYLE_LETTER,
+    categoryNumber: parseString(xml.CATEGORY_NUMBER) ?? '',
+    styleLetter: parseString(xml.STYLE_LETTER) ?? '',
     styleGuide: xml.STYLE_GUIDE,
     type: xml.TYPE as Style['type'],
     ogMin: parseNumber(xml.OG_MIN, 'OG_MIN') ?? 0,

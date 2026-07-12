@@ -5,8 +5,8 @@ export interface BeerXMLStyle {
   NAME: string
   VERSION: number
   CATEGORY: string
-  CATEGORY_NUMBER: string
-  STYLE_LETTER: string
+  CATEGORY_NUMBER: string | number
+  STYLE_LETTER: string | number
   STYLE_GUIDE: string
   TYPE: string
   OG_MIN: number
