@@ -1,6 +1,6 @@
 {
   "name": "beerxml-ts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "TypeScript library for parsing and serializing BeerXML 1.0 format",
   "type": "module",
   "sideEffects": false,
