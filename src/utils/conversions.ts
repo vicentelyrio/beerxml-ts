@@ -234,7 +234,7 @@ export const bitterness = {
   /**
    * Calculates IBU contribution from a hop addition
    * IBU = (AA% * weight_oz * utilization * 7489) / (volume_gal * (1 + correction))
-   * Simplified: IBU = (AA% * weight_grams * utilization) / (volume_liters * 10)
+   * Simplified: IBU = (AA% * weight_grams * utilization * 10) / volume_liters
    */
   calculateIbu(
     alphaAcid: number,
@@ -242,6 +242,6 @@ export const bitterness = {
     utilization: number,
     volumeLiters: number,
   ): number {
-    return (alphaAcid * weightKg * 1000 * utilization) / (volumeLiters * 10)
+    return (alphaAcid * weightKg * 1000 * utilization * 10) / volumeLiters
   },
 }
