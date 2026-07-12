@@ -24,5 +24,13 @@
       "quoteStyle": "single",
       "semicolons": "asNeeded"
     }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   }
 }
