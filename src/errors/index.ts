@@ -4,11 +4,11 @@
 export class BeerXMLError extends Error {
   constructor(
     message: string,
-    public code: string
+    public code: string,
   ) {
-    super(message);
-    this.name = 'BeerXMLError';
-    Object.setPrototypeOf(this, BeerXMLError.prototype);
+    super(message)
+    this.name = 'BeerXMLError'
+    Object.setPrototypeOf(this, BeerXMLError.prototype)
   }
 }
 
@@ -19,11 +19,11 @@ export class BeerXMLParseError extends BeerXMLError {
   constructor(
     message: string,
     public line?: number,
-    public column?: number
+    public column?: number,
   ) {
-    super(message, 'PARSE_ERROR');
-    this.name = 'BeerXMLParseError';
-    Object.setPrototypeOf(this, BeerXMLParseError.prototype);
+    super(message, 'PARSE_ERROR')
+    this.name = 'BeerXMLParseError'
+    Object.setPrototypeOf(this, BeerXMLParseError.prototype)
   }
 }
 
@@ -33,11 +33,11 @@ export class BeerXMLParseError extends BeerXMLError {
 export class BeerXMLValidationError extends BeerXMLError {
   constructor(
     message: string,
-    public errors: Array<{ path: string; message: string }>
+    public errors: Array<{ path: string; message: string }>,
   ) {
-    super(message, 'VALIDATION_ERROR');
-    this.name = 'BeerXMLValidationError';
-    Object.setPrototypeOf(this, BeerXMLValidationError.prototype);
+    super(message, 'VALIDATION_ERROR')
+    this.name = 'BeerXMLValidationError'
+    Object.setPrototypeOf(this, BeerXMLValidationError.prototype)
   }
 }
 
@@ -46,9 +46,8 @@ export class BeerXMLValidationError extends BeerXMLError {
  */
 export class BeerXMLSerializationError extends BeerXMLError {
   constructor(message: string) {
-    super(message, 'SERIALIZATION_ERROR');
-    this.name = 'BeerXMLSerializationError';
-    Object.setPrototypeOf(this, BeerXMLSerializationError.prototype);
+    super(message, 'SERIALIZATION_ERROR')
+    this.name = 'BeerXMLSerializationError'
+    Object.setPrototypeOf(this, BeerXMLSerializationError.prototype)
   }
 }
-

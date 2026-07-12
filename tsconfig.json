@@ -5,8 +5,8 @@
     "lib": ["ES2020"],
 
     /* Modules */
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "resolveJsonModule": true,
 
     /* Emit */
@@ -45,4 +45,3 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
-

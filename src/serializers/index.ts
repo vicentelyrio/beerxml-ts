@@ -1,7 +1,7 @@
-import { XMLBuilder } from 'fast-xml-parser';
-import { BeerXMLSerializationError } from '../errors/index.js';
-import { recipeToXML } from '../converters/recipe.js';
-import type { Recipe } from '../types/recipe.js';
+import { XMLBuilder } from 'fast-xml-parser'
+import { recipeToXML } from '../converters/recipe.js'
+import { BeerXMLSerializationError } from '../errors/index.js'
+import type { Recipe } from '../types/recipe.js'
 
 /**
  * XML Builder configuration for BeerXML format
@@ -14,7 +14,7 @@ const builderOptions = {
   indentBy: '  ',
   suppressEmptyNode: true,
   suppressBooleanAttributes: false,
-};
+}
 
 /**
  * Serializes a Recipe object to BeerXML format string
@@ -34,9 +34,9 @@ const builderOptions = {
  */
 export function serializeRecipe(recipe: Recipe): string {
   try {
-    const xmlRecipe = recipeToXML(recipe);
-    
-    const builder = new XMLBuilder(builderOptions);
+    const xmlRecipe = recipeToXML(recipe)
+
+    const builder = new XMLBuilder(builderOptions)
     const xmlObj = {
       '?xml': {
         '@_version': '1.0',
@@ -45,18 +45,22 @@ export function serializeRecipe(recipe: Recipe): string {
       RECIPES: {
         RECIPE: xmlRecipe,
       },
-    };
+    }
 
-    const xml = builder.build(xmlObj);
-    return xml as string;
+    const xml = builder.build(xmlObj)
+    return xml as string
   } catch (error) {
     if (error instanceof BeerXMLSerializationError) {
-      throw error;
+      throw error
     }
     if (error instanceof Error) {
-      throw new BeerXMLSerializationError(`Failed to serialize recipe: ${error.message}`);
+      throw new BeerXMLSerializationError(
+        `Failed to serialize recipe: ${error.message}`,
+      )
     }
-    throw new BeerXMLSerializationError('Unknown error occurred while serializing recipe');
+    throw new BeerXMLSerializationError(
+      'Unknown error occurred while serializing recipe',
+    )
   }
 }
 
@@ -69,12 +73,14 @@ export function serializeRecipe(recipe: Recipe): string {
 export function serializeRecipes(recipes: Recipe[]): string {
   try {
     if (recipes.length === 0) {
-      throw new BeerXMLSerializationError('Cannot serialize empty recipes array');
+      throw new BeerXMLSerializationError(
+        'Cannot serialize empty recipes array',
+      )
     }
 
-    const xmlRecipes = recipes.map(recipeToXML);
-    
-    const builder = new XMLBuilder(builderOptions);
+    const xmlRecipes = recipes.map(recipeToXML)
+
+    const builder = new XMLBuilder(builderOptions)
     const xmlObj = {
       '?xml': {
         '@_version': '1.0',
@@ -83,18 +89,21 @@ export function serializeRecipes(recipes: Recipe[]): string {
       RECIPES: {
         RECIPE: xmlRecipes,
       },
-    };
+    }
 
-    const xml = builder.build(xmlObj);
-    return xml as string;
+    const xml = builder.build(xmlObj)
+    return xml as string
   } catch (error) {
     if (error instanceof BeerXMLSerializationError) {
-      throw error;
+      throw error
     }
     if (error instanceof Error) {
-      throw new BeerXMLSerializationError(`Failed to serialize recipes: ${error.message}`);
+      throw new BeerXMLSerializationError(
+        `Failed to serialize recipes: ${error.message}`,
+      )
     }
-    throw new BeerXMLSerializationError('Unknown error occurred while serializing recipes');
+    throw new BeerXMLSerializationError(
+      'Unknown error occurred while serializing recipes',
+    )
   }
 }
-

@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Hop validation
@@ -21,7 +21,6 @@ export const HopSchema = z.object({
   caryophyllene: z.number().min(0).max(100).optional(),
   cohumulone: z.number().min(0).max(100).optional(),
   myrcene: z.number().min(0).max(100).optional(),
-});
+})
 
-export type HopValidation = z.infer<typeof HopSchema>;
-
+export type HopValidation = z.infer<typeof HopSchema>

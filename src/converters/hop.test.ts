@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { hopFromXML, hopToXML } from './hop.js';
-import type { BeerXMLHop } from '../schemas/hop.js';
-import type { Hop } from '../types/hop.js';
+import { describe, expect, it } from 'vitest'
+import type { BeerXMLHop } from '../schemas/hop.js'
+import type { Hop } from '../types/hop.js'
+import { hopFromXML, hopToXML } from './hop.js'
 
 describe('Hop Converter', () => {
   const xmlHop: BeerXMLHop = {
@@ -22,7 +22,7 @@ describe('Hop Converter', () => {
     CARYOPHYLLENE: 5,
     COHUMULONE: 33,
     MYRCENE: 50,
-  };
+  }
 
   const tsHop: Hop = {
     name: 'Cascade',
@@ -42,22 +42,22 @@ describe('Hop Converter', () => {
     caryophyllene: 5,
     cohumulone: 33,
     myrcene: 50,
-  };
+  }
 
   it('should convert BeerXML hop to TypeScript hop', () => {
-    const result = hopFromXML(xmlHop);
-    expect(result).toEqual(tsHop);
-  });
+    const result = hopFromXML(xmlHop)
+    expect(result).toEqual(tsHop)
+  })
 
   it('should convert TypeScript hop to BeerXML hop', () => {
-    const result = hopToXML(tsHop);
-    expect(result).toEqual(xmlHop);
-  });
+    const result = hopToXML(tsHop)
+    expect(result).toEqual(xmlHop)
+  })
 
   it('should handle round-trip conversion', () => {
-    const converted = hopToXML(hopFromXML(xmlHop));
-    expect(converted).toEqual(xmlHop);
-  });
+    const converted = hopToXML(hopFromXML(xmlHop))
+    expect(converted).toEqual(xmlHop)
+  })
 
   it('should handle minimal hop data', () => {
     const minimalXml: BeerXMLHop = {
@@ -67,12 +67,11 @@ describe('Hop Converter', () => {
       AMOUNT: 0.025,
       USE: 'Boil',
       TIME: 30,
-    };
+    }
 
-    const result = hopFromXML(minimalXml);
-    expect(result.name).toBe('Simple Hop');
-    expect(result.alpha).toBe(5.0);
-    expect(result.notes).toBeUndefined();
-  });
-});
-
+    const result = hopFromXML(minimalXml)
+    expect(result.name).toBe('Simple Hop')
+    expect(result.alpha).toBe(5.0)
+    expect(result.notes).toBeUndefined()
+  })
+})

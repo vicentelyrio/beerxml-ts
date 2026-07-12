@@ -1,6 +1,6 @@
-import type { Misc } from '../types/misc.js';
-import type { BeerXMLMisc } from '../schemas/misc.js';
-import { parseNumber, parseBoolean, serializeBoolean } from './utils.js';
+import type { BeerXMLMisc } from '../schemas/misc.js'
+import type { Misc } from '../types/misc.js'
+import { parseBoolean, parseNumber, serializeBoolean } from './utils.js'
 
 /**
  * Converts BeerXML Misc to TypeScript Misc
@@ -16,7 +16,7 @@ export function miscFromXML(xml: BeerXMLMisc): Misc {
     amountIsWeight: parseBoolean(xml.AMOUNT_IS_WEIGHT),
     useFor: xml.USE_FOR,
     notes: xml.NOTES,
-  };
+  }
 }
 
 /**
@@ -33,6 +33,5 @@ export function miscToXML(misc: Misc): BeerXMLMisc {
     AMOUNT_IS_WEIGHT: serializeBoolean(misc.amountIsWeight),
     USE_FOR: misc.useFor,
     NOTES: misc.notes,
-  };
+  }
 }
-

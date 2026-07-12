@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Misc validation
@@ -13,7 +13,6 @@ export const MiscSchema = z.object({
   amountIsWeight: z.boolean().optional(),
   useFor: z.string().optional(),
   notes: z.string().optional(),
-});
+})
 
-export type MiscValidation = z.infer<typeof MiscSchema>;
-
+export type MiscValidation = z.infer<typeof MiscSchema>

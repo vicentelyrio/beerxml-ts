@@ -5,7 +5,7 @@ A modern TypeScript library for parsing and serializing BeerXML 1.0 format. Prov
 ## Features
 
 - ✅ **Full BeerXML 1.0 Support** - Complete implementation of the BeerXML specification
-- ✅ **Zero Runtime Dependencies** - Lightweight with no external dependencies in production
+- ✅ **Minimal Dependencies** - Just `zod` and `fast-xml-parser` at runtime
 - ✅ **Full Type Safety** - Strict TypeScript with no `any` types
 - ✅ **Bidirectional Conversion** - XML ↔ TypeScript ↔ JSON without data loss
 - ✅ **Developer Friendly** - Idiomatic TypeScript with camelCase properties
@@ -173,9 +173,13 @@ const xmlHop: BeerXMLHop = {
 
 ## Unit Conversions
 
-Built-in utilities for common brewing calculations:
+Built-in utilities for common brewing calculations. They're also available from a
+dedicated `beerxml-ts/utils` subpath, so you can import just the conversion helpers
+without pulling in the parser or the zod-based validators:
 
 ```typescript
+import { volume, weight, temperature, gravity, color, bitterness } from 'beerxml-ts/utils';
+// or, from the main entry:
 import { volume, weight, temperature, gravity, color, bitterness } from 'beerxml-ts';
 
 // Volume conversions
@@ -416,19 +420,28 @@ Use the built-in conversion utilities to work with other unit systems.
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Run tests
-npm test
+pnpm test
 
 # Run tests in watch mode
-npm run test:watch
+pnpm run test:watch
 
-# Check TypeScript
-npm run lint
+# Type-check
+pnpm run typecheck
+
+# Lint (Biome)
+pnpm run lint
+
+# Lint and auto-fix
+pnpm run lint:fix
+
+# Format
+pnpm run format
 
 # Build
-npm run build
+pnpm run build
 ```
 
 ## Contributing
@@ -447,5 +460,5 @@ MIT
 
 ## Credits
 
-Built with TypeScript, Vitest, Zod, and fast-xml-parser.
+Built with TypeScript, tsdown, Vitest, Biome, Zod, and fast-xml-parser.
 

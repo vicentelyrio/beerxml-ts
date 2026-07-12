@@ -1,6 +1,6 @@
-import type { Equipment } from '../types/equipment.js';
-import type { BeerXMLEquipment } from '../schemas/equipment.js';
-import { parseNumber, parseBoolean, serializeBoolean } from './utils.js';
+import type { BeerXMLEquipment } from '../schemas/equipment.js'
+import type { Equipment } from '../types/equipment.js'
+import { parseBoolean, parseNumber, serializeBoolean } from './utils.js'
 
 /**
  * Converts BeerXML Equipment to TypeScript Equipment
@@ -23,7 +23,7 @@ export function equipmentFromXML(xml: BeerXMLEquipment): Equipment {
     topUpKettle: parseNumber(xml.TOP_UP_KETTLE, 'TOP_UP_KETTLE'),
     hopUtilization: parseNumber(xml.HOP_UTILIZATION, 'HOP_UTILIZATION'),
     notes: xml.NOTES,
-  };
+  }
 }
 
 /**
@@ -47,6 +47,5 @@ export function equipmentToXML(equipment: Equipment): BeerXMLEquipment {
     TOP_UP_KETTLE: equipment.topUpKettle,
     HOP_UTILIZATION: equipment.hopUtilization,
     NOTES: equipment.notes,
-  };
+  }
 }
-

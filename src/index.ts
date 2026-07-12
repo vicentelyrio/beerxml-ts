@@ -3,22 +3,22 @@
  * @packageDocumentation
  */
 
-import { parseRecipe, parseRecipes } from './parser/index.js';
-import { serializeRecipe, serializeRecipes } from './serializers/index.js';
-import { RecipeSchema } from './validators/recipe.js';
-import { BeerXMLValidationError } from './errors/index.js';
-import type { Recipe } from './types/recipe.js';
+import { BeerXMLValidationError } from './errors/index.js'
+import { parseRecipe, parseRecipes } from './parser/index.js'
+import { serializeRecipe, serializeRecipes } from './serializers/index.js'
+import type { Recipe } from './types/recipe.js'
+import { RecipeSchema } from './validators/recipe.js'
 
 /**
  * Result of a validation operation
  */
 export interface ValidationResult {
   /** Whether validation passed */
-  valid: boolean;
+  valid: boolean
   /** Validation errors if any */
-  errors?: Array<{ path: string; message: string }>;
+  errors?: Array<{ path: string; message: string }>
   /** Validated data if successful */
-  data?: Recipe;
+  data?: Recipe
 }
 
 /**
@@ -27,10 +27,10 @@ export interface ValidationResult {
  * ```typescript
  * // Parse XML
  * const recipe = BeerXML.parse(xmlString);
- * 
+ *
  * // Serialize to XML
  * const xml = BeerXML.stringify(recipe);
- * 
+ *
  * // Validate data
  * const result = BeerXML.validate(data);
  * if (result.valid) {
@@ -38,6 +38,7 @@ export interface ValidationResult {
  * }
  * ```
  */
+// biome-ignore lint/complexity/noStaticOnlyClass: BeerXML is a namespaced static API by design
 export class BeerXML {
   /**
    * Parses a BeerXML string into a Recipe object
@@ -52,7 +53,7 @@ export class BeerXML {
    * ```
    */
   static parse(xml: string): Recipe {
-    return parseRecipe(xml);
+    return parseRecipe(xml)
   }
 
   /**
@@ -62,7 +63,7 @@ export class BeerXML {
    * @throws {BeerXMLParseError} If XML is malformed
    */
   static parseMultiple(xml: string): Recipe[] {
-    return parseRecipes(xml);
+    return parseRecipes(xml)
   }
 
   /**
@@ -76,7 +77,7 @@ export class BeerXML {
    * ```
    */
   static stringify(recipe: Recipe): string {
-    return serializeRecipe(recipe);
+    return serializeRecipe(recipe)
   }
 
   /**
@@ -86,7 +87,7 @@ export class BeerXML {
    * @throws {BeerXMLSerializationError} If serialization fails
    */
   static stringifyMultiple(recipes: Recipe[]): string {
-    return serializeRecipes(recipes);
+    return serializeRecipes(recipes)
   }
 
   /**
@@ -95,7 +96,7 @@ export class BeerXML {
    * @returns Plain JSON object
    */
   static toJSON(recipe: Recipe): Record<string, unknown> {
-    return JSON.parse(JSON.stringify(recipe)) as Record<string, unknown>;
+    return JSON.parse(JSON.stringify(recipe)) as Record<string, unknown>
   }
 
   /**
@@ -105,18 +106,18 @@ export class BeerXML {
    * @throws {BeerXMLValidationError} If validation fails
    */
   static fromJSON(json: unknown): Recipe {
-    const data = typeof json === 'string' ? JSON.parse(json) : json;
-    const result = RecipeSchema.safeParse(data);
-    
+    const data = typeof json === 'string' ? JSON.parse(json) : json
+    const result = RecipeSchema.safeParse(data)
+
     if (!result.success) {
       const errors = result.error.errors.map((err) => ({
         path: err.path.join('.'),
         message: err.message,
-      }));
-      throw new BeerXMLValidationError('Recipe validation failed', errors);
+      }))
+      throw new BeerXMLValidationError('Recipe validation failed', errors)
     }
-    
-    return result.data;
+
+    return result.data
   }
 
   /**
@@ -134,49 +135,42 @@ export class BeerXML {
    * ```
    */
   static validate(data: unknown): ValidationResult {
-    const result = RecipeSchema.safeParse(data);
-    
+    const result = RecipeSchema.safeParse(data)
+
     if (result.success) {
       return {
         valid: true,
         data: result.data,
-      };
+      }
     }
-    
+
     const errors = result.error.errors.map((err) => ({
       path: err.path.join('.'),
       message: err.message,
-    }));
-    
+    }))
+
     return {
       valid: false,
       errors,
-    };
+    }
   }
 }
 
-// Export types
-export type * from './types/index.js';
-
-// Export schemas
-export type * from './schemas/index.js';
-
-// Export errors
-export * from './errors/index.js';
-
-// Export utilities
-export * from './utils/index.js';
-
-// Export validators
-export * from './validators/index.js';
-
 // Export converters
-export * from './converters/index.js';
-
+export * from './converters/index.js'
+// Export errors
+export * from './errors/index.js'
 // Export parsers and serializers
-export { parseRecipe, parseRecipes } from './parser/index.js';
-export { serializeRecipe, serializeRecipes } from './serializers/index.js';
+export { parseRecipe, parseRecipes } from './parser/index.js'
+// Export schemas
+export type * from './schemas/index.js'
+export { serializeRecipe, serializeRecipes } from './serializers/index.js'
+// Export types
+export type * from './types/index.js'
+// Export utilities
+export * from './utils/index.js'
+// Export validators
+export * from './validators/index.js'
 
 // Default export
-export default BeerXML;
-
+export default BeerXML

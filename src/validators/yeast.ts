@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Yeast validation
@@ -21,7 +21,6 @@ export const YeastSchema = z.object({
   timesCultured: z.number().int().min(0).optional(),
   maxReuse: z.number().int().min(0).optional(),
   addToSecondary: z.boolean().optional(),
-});
+})
 
-export type YeastValidation = z.infer<typeof YeastSchema>;
-
+export type YeastValidation = z.infer<typeof YeastSchema>

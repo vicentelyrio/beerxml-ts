@@ -1,14 +1,14 @@
-import type { Recipe } from '../types/recipe.js';
-import type { BeerXMLRecipe } from '../schemas/recipe.js';
-import { parseNumber, parseBoolean, serializeBoolean } from './utils.js';
-import { hopFromXML, hopToXML } from './hop.js';
-import { fermentableFromXML, fermentableToXML } from './fermentable.js';
-import { yeastFromXML, yeastToXML } from './yeast.js';
-import { miscFromXML, miscToXML } from './misc.js';
-import { waterFromXML, waterToXML } from './water.js';
-import { styleFromXML, styleToXML } from './style.js';
-import { equipmentFromXML, equipmentToXML } from './equipment.js';
-import { mashFromXML, mashToXML } from './mash.js';
+import type { BeerXMLRecipe } from '../schemas/recipe.js'
+import type { Recipe } from '../types/recipe.js'
+import { equipmentFromXML, equipmentToXML } from './equipment.js'
+import { fermentableFromXML, fermentableToXML } from './fermentable.js'
+import { hopFromXML, hopToXML } from './hop.js'
+import { mashFromXML, mashToXML } from './mash.js'
+import { miscFromXML, miscToXML } from './misc.js'
+import { styleFromXML, styleToXML } from './style.js'
+import { parseBoolean, parseNumber, serializeBoolean } from './utils.js'
+import { waterFromXML, waterToXML } from './water.js'
+import { yeastFromXML, yeastToXML } from './yeast.js'
 
 /**
  * Converts BeerXML Recipe to TypeScript Recipe
@@ -18,36 +18,36 @@ export function recipeFromXML(xml: BeerXMLRecipe): Recipe {
   const hops = Array.isArray(xml.HOPS?.HOP)
     ? xml.HOPS.HOP.map(hopFromXML)
     : xml.HOPS?.HOP
-    ? [hopFromXML(xml.HOPS.HOP)]
-    : [];
+      ? [hopFromXML(xml.HOPS.HOP)]
+      : []
 
   // Handle fermentables array
   const fermentables = Array.isArray(xml.FERMENTABLES?.FERMENTABLE)
     ? xml.FERMENTABLES.FERMENTABLE.map(fermentableFromXML)
     : xml.FERMENTABLES?.FERMENTABLE
-    ? [fermentableFromXML(xml.FERMENTABLES.FERMENTABLE)]
-    : [];
+      ? [fermentableFromXML(xml.FERMENTABLES.FERMENTABLE)]
+      : []
 
   // Handle yeasts array
   const yeasts = Array.isArray(xml.YEASTS?.YEAST)
     ? xml.YEASTS.YEAST.map(yeastFromXML)
     : xml.YEASTS?.YEAST
-    ? [yeastFromXML(xml.YEASTS.YEAST)]
-    : [];
+      ? [yeastFromXML(xml.YEASTS.YEAST)]
+      : []
 
   // Handle optional miscs array
   const miscs = xml.MISCS
     ? Array.isArray(xml.MISCS.MISC)
       ? xml.MISCS.MISC.map(miscFromXML)
       : [miscFromXML(xml.MISCS.MISC)]
-    : undefined;
+    : undefined
 
   // Handle optional waters array
   const waters = xml.WATERS
     ? Array.isArray(xml.WATERS.WATER)
       ? xml.WATERS.WATER.map(waterFromXML)
       : [waterFromXML(xml.WATERS.WATER)]
-    : undefined;
+    : undefined
 
   return {
     name: xml.NAME,
@@ -72,7 +72,10 @@ export function recipeFromXML(xml: BeerXMLRecipe): Recipe {
     rating: parseNumber(xml.TASTE_RATING, 'TASTE_RATING'),
     og: parseNumber(xml.OG, 'OG'),
     fg: parseNumber(xml.FG, 'FG'),
-    fermentationStages: parseNumber(xml.FERMENTATION_STAGES, 'FERMENTATION_STAGES'),
+    fermentationStages: parseNumber(
+      xml.FERMENTATION_STAGES,
+      'FERMENTATION_STAGES',
+    ),
     primaryAge: parseNumber(xml.PRIMARY_AGE, 'PRIMARY_AGE'),
     primaryTemp: parseNumber(xml.PRIMARY_TEMP, 'PRIMARY_TEMP'),
     secondaryAge: parseNumber(xml.SECONDARY_AGE, 'SECONDARY_AGE'),
@@ -86,9 +89,12 @@ export function recipeFromXML(xml: BeerXMLRecipe): Recipe {
     forcedCarbonation: parseBoolean(xml.FORCED_CARBONATION),
     primingSugarName: xml.PRIMING_SUGAR_NAME,
     carbonationTemp: parseNumber(xml.CARBONATION_TEMP, 'CARBONATION_TEMP'),
-    primingSugarEquiv: parseNumber(xml.PRIMING_SUGAR_EQUIV, 'PRIMING_SUGAR_EQUIV'),
+    primingSugarEquiv: parseNumber(
+      xml.PRIMING_SUGAR_EQUIV,
+      'PRIMING_SUGAR_EQUIV',
+    ),
     kegPrimingFactor: parseNumber(xml.KEG_PRIMING_FACTOR, 'KEG_PRIMING_FACTOR'),
-  };
+  }
 }
 
 /**
@@ -117,7 +123,9 @@ export function recipeToXML(recipe: Recipe): BeerXMLRecipe {
     YEASTS: {
       YEAST: recipe.yeasts.map(yeastToXML),
     },
-    WATERS: recipe.waters ? { WATER: recipe.waters.map(waterToXML) } : undefined,
+    WATERS: recipe.waters
+      ? { WATER: recipe.waters.map(waterToXML) }
+      : undefined,
     MASH: recipe.mash ? mashToXML(recipe.mash) : undefined,
     NOTES: recipe.notes,
     TASTE_NOTES: recipe.tastingNotes,
@@ -140,6 +148,5 @@ export function recipeToXML(recipe: Recipe): BeerXMLRecipe {
     CARBONATION_TEMP: recipe.carbonationTemp,
     PRIMING_SUGAR_EQUIV: recipe.primingSugarEquiv,
     KEG_PRIMING_FACTOR: recipe.kegPrimingFactor,
-  };
+  }
 }
-

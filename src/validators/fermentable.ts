@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Fermentable validation
@@ -21,7 +21,6 @@ export const FermentableSchema = z.object({
   maxInBatch: z.number().min(0).max(100).optional(),
   recommendMash: z.boolean().optional(),
   ibuGalPerLb: z.number().min(0).optional(),
-});
+})
 
-export type FermentableValidation = z.infer<typeof FermentableSchema>;
-
+export type FermentableValidation = z.infer<typeof FermentableSchema>

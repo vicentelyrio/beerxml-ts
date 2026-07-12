@@ -1,12 +1,12 @@
-import { z } from 'zod';
-import { StyleSchema } from './style.js';
-import { EquipmentSchema } from './equipment.js';
-import { HopSchema } from './hop.js';
-import { FermentableSchema } from './fermentable.js';
-import { YeastSchema } from './yeast.js';
-import { MiscSchema } from './misc.js';
-import { WaterSchema } from './water.js';
-import { MashSchema } from './mash.js';
+import { z } from 'zod'
+import { EquipmentSchema } from './equipment.js'
+import { FermentableSchema } from './fermentable.js'
+import { HopSchema } from './hop.js'
+import { MashSchema } from './mash.js'
+import { MiscSchema } from './misc.js'
+import { StyleSchema } from './style.js'
+import { WaterSchema } from './water.js'
+import { YeastSchema } from './yeast.js'
 
 /**
  * Zod schema for Recipe validation
@@ -23,10 +23,10 @@ export const RecipeSchema = z.object({
   boilSize: z.number().positive('Boil size must be positive'),
   boilTime: z.number().min(0, 'Boil time must be non-negative'),
   efficiency: z.number().min(0).max(100).optional(),
-  hops: z.array(HopSchema).min(0),
-  fermentables: z.array(FermentableSchema).min(0),
+  hops: z.array(HopSchema),
+  fermentables: z.array(FermentableSchema),
   miscs: z.array(MiscSchema).optional(),
-  yeasts: z.array(YeastSchema).min(0),
+  yeasts: z.array(YeastSchema),
   waters: z.array(WaterSchema).optional(),
   mash: MashSchema.optional(),
   notes: z.string().optional(),
@@ -50,7 +50,6 @@ export const RecipeSchema = z.object({
   carbonationTemp: z.number().optional(),
   primingSugarEquiv: z.number().min(0).optional(),
   kegPrimingFactor: z.number().min(0).optional(),
-});
+})
 
-export type RecipeValidation = z.infer<typeof RecipeSchema>;
-
+export type RecipeValidation = z.infer<typeof RecipeSchema>

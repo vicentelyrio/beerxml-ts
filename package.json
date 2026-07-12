@@ -1,29 +1,57 @@
 {
   "name": "beerxml-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "TypeScript library for parsing and serializing BeerXML 1.0 format",
   "type": "module",
+  "sideEffects": false,
+  "packageManager": "pnpm@10.27.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vicentelyrio/beerxml-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vicentelyrio/beerxml-ts/issues"
+  },
+  "homepage": "https://github.com/vicentelyrio/beerxml-ts#readme",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.cts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./utils": {
+      "import": {
+        "types": "./dist/utils/index.d.mts",
+        "default": "./dist/utils/index.mjs"
+      },
+      "require": {
+        "types": "./dist/utils/index.d.cts",
+        "default": "./dist/utils/index.cjs"
+      }
     }
   },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
+    "build": "tsdown src/index.ts src/utils/index.ts --format cjs,esm --dts --unbundle --clean",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "format": "biome format --write .",
     "example": "tsx example.ts",
-    "prepublishOnly": "npm run lint && npm run test && npm run build"
+    "prepublishOnly": "npm run typecheck && npm run lint && npm run test && npm run build"
   },
   "keywords": [
     "beerxml",
@@ -36,14 +64,17 @@
   ],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "fast-xml-parser": "^4.3.3",
+    "zod": "^3.22.4"
+  },
   "devDependencies": {
+    "@biomejs/biome": "^2.5.3",
     "@types/node": "^20.10.0",
     "@vitest/coverage-v8": "^1.0.4",
-    "fast-xml-parser": "^4.3.3",
-    "tsup": "^8.0.1",
+    "tsdown": "^0.22.5",
     "tsx": "^4.20.6",
-    "typescript": "^5.3.3",
-    "vitest": "^1.0.4",
-    "zod": "^3.22.4"
+    "typescript": "^7.0.2",
+    "vitest": "^1.0.4"
   }
 }
