@@ -23,6 +23,18 @@ export function serializeBoolean(
 }
 
 /**
+ * Coerces a BeerXML tag value back to string
+ * @param value - value that fast-xml-parser may have auto-coerced to a number
+ * @returns string representation, or undefined if input is undefined
+ */
+export function parseString(
+  value: string | number | undefined,
+): string | undefined {
+  if (value === undefined) return undefined
+  return String(value)
+}
+
+/**
  * Parses a number from string with validation
  * @param value - string representation of a number
  * @param fieldName - name of the field for error messages
