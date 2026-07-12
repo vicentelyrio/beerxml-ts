@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for MashStep validation
@@ -11,9 +11,11 @@ export const MashStepSchema = z.object({
   stepTime: z.number().min(0, 'Step time must be non-negative'),
   infuseAmount: z.number().min(0).optional(),
   infuseTemp: z.number().optional(),
+  rampTime: z.number().min(0).optional(),
+  endTemp: z.number().optional(),
   decoctionAmount: z.number().min(0).optional(),
   notes: z.string().optional(),
-});
+})
 
 /**
  * Zod schema for Mash validation
@@ -22,15 +24,17 @@ export const MashSchema = z.object({
   name: z.string().min(1, 'Mash name is required'),
   version: z.number().int().positive(),
   grainTemp: z.number().min(0, 'Grain temperature must be non-negative'),
-  mashSteps: z.array(MashStepSchema).min(1, 'At least one mash step is required'),
+  mashSteps: z
+    .array(MashStepSchema)
+    .min(1, 'At least one mash step is required'),
   notes: z.string().optional(),
   tunTemp: z.number().optional(),
   spargeTemp: z.number().optional(),
+  ph: z.number().min(0).max(14).optional(),
   equipAdjust: z.boolean().optional(),
   tunWeight: z.number().min(0).optional(),
   tunSpecificHeat: z.number().min(0).optional(),
-});
+})
 
-export type MashStepValidation = z.infer<typeof MashStepSchema>;
-export type MashValidation = z.infer<typeof MashSchema>;
-
+export type MashStepValidation = z.infer<typeof MashStepSchema>
+export type MashValidation = z.infer<typeof MashSchema>

@@ -1,6 +1,6 @@
-import type { Fermentable } from '../types/fermentable.js';
-import type { BeerXMLFermentable } from '../schemas/fermentable.js';
-import { parseNumber, parseBoolean, serializeBoolean } from './utils.js';
+import type { BeerXMLFermentable } from '../schemas/fermentable.js'
+import type { Fermentable } from '../types/fermentable.js'
+import { parseBoolean, parseNumber, serializeBoolean } from './utils.js'
 
 /**
  * Converts BeerXML Fermentable to TypeScript Fermentable
@@ -24,7 +24,7 @@ export function fermentableFromXML(xml: BeerXMLFermentable): Fermentable {
     maxInBatch: parseNumber(xml.MAX_IN_BATCH, 'MAX_IN_BATCH'),
     recommendMash: parseBoolean(xml.RECOMMEND_MASH),
     ibuGalPerLb: parseNumber(xml.IBU_GAL_PER_LB, 'IBU_GAL_PER_LB'),
-  };
+  }
 }
 
 /**
@@ -49,6 +49,5 @@ export function fermentableToXML(fermentable: Fermentable): BeerXMLFermentable {
     MAX_IN_BATCH: fermentable.maxInBatch,
     RECOMMEND_MASH: serializeBoolean(fermentable.recommendMash),
     IBU_GAL_PER_LB: fermentable.ibuGalPerLb,
-  };
+  }
 }
-

@@ -1,6 +1,6 @@
-import type { Style } from '../types/style.js';
-import type { BeerXMLStyle } from '../schemas/style.js';
-import { parseNumber } from './utils.js';
+import type { BeerXMLStyle } from '../schemas/style.js'
+import type { Style } from '../types/style.js'
+import { parseNumber } from './utils.js'
 
 /**
  * Converts BeerXML Style to TypeScript Style
@@ -30,7 +30,7 @@ export function styleFromXML(xml: BeerXMLStyle): Style {
     profile: xml.PROFILE,
     ingredients: xml.INGREDIENTS,
     examples: xml.EXAMPLES,
-  };
+  }
 }
 
 /**
@@ -61,6 +61,5 @@ export function styleToXML(style: Style): BeerXMLStyle {
     PROFILE: style.profile,
     INGREDIENTS: style.ingredients,
     EXAMPLES: style.examples,
-  };
+  }
 }
-

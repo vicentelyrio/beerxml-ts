@@ -1,6 +1,6 @@
-import type { Water } from '../types/water.js';
-import type { BeerXMLWater } from '../schemas/water.js';
-import { parseNumber } from './utils.js';
+import type { BeerXMLWater } from '../schemas/water.js'
+import type { Water } from '../types/water.js'
+import { parseNumber } from './utils.js'
 
 /**
  * Converts BeerXML Water to TypeScript Water
@@ -18,7 +18,7 @@ export function waterFromXML(xml: BeerXMLWater): Water {
     magnesium: parseNumber(xml.MAGNESIUM, 'MAGNESIUM') ?? 0,
     ph: parseNumber(xml.PH, 'PH'),
     notes: xml.NOTES,
-  };
+  }
 }
 
 /**
@@ -37,6 +37,5 @@ export function waterToXML(water: Water): BeerXMLWater {
     MAGNESIUM: water.magnesium,
     PH: water.ph,
     NOTES: water.notes,
-  };
+  }
 }
-

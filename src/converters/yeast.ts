@@ -1,6 +1,6 @@
-import type { Yeast } from '../types/yeast.js';
-import type { BeerXMLYeast } from '../schemas/yeast.js';
-import { parseNumber, parseBoolean, serializeBoolean } from './utils.js';
+import type { BeerXMLYeast } from '../schemas/yeast.js'
+import type { Yeast } from '../types/yeast.js'
+import { parseBoolean, parseNumber, serializeBoolean } from './utils.js'
 
 /**
  * Converts BeerXML Yeast to TypeScript Yeast
@@ -24,7 +24,7 @@ export function yeastFromXML(xml: BeerXMLYeast): Yeast {
     timesCultured: parseNumber(xml.TIMES_CULTURED, 'TIMES_CULTURED'),
     maxReuse: parseNumber(xml.MAX_REUSE, 'MAX_REUSE'),
     addToSecondary: parseBoolean(xml.ADD_TO_SECONDARY),
-  };
+  }
 }
 
 /**
@@ -49,6 +49,5 @@ export function yeastToXML(yeast: Yeast): BeerXMLYeast {
     TIMES_CULTURED: yeast.timesCultured,
     MAX_REUSE: yeast.maxReuse,
     ADD_TO_SECONDARY: serializeBoolean(yeast.addToSecondary),
-  };
+  }
 }
-

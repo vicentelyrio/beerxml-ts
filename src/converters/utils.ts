@@ -1,4 +1,4 @@
-import { BeerXMLParseError } from '../errors/index.js';
+import { BeerXMLParseError } from '../errors/index.js'
 
 /**
  * Converts BeerXML boolean string to boolean
@@ -6,8 +6,8 @@ import { BeerXMLParseError } from '../errors/index.js';
  * @returns boolean value
  */
 export function parseBoolean(value: string | undefined): boolean | undefined {
-  if (value === undefined) return undefined;
-  return value === 'TRUE';
+  if (value === undefined) return undefined
+  return value === 'TRUE'
 }
 
 /**
@@ -15,9 +15,11 @@ export function parseBoolean(value: string | undefined): boolean | undefined {
  * @param value - boolean value
  * @returns "TRUE" or "FALSE" string
  */
-export function serializeBoolean(value: boolean | undefined): string | undefined {
-  if (value === undefined) return undefined;
-  return value ? 'TRUE' : 'FALSE';
+export function serializeBoolean(
+  value: boolean | undefined,
+): string | undefined {
+  if (value === undefined) return undefined
+  return value ? 'TRUE' : 'FALSE'
 }
 
 /**
@@ -27,22 +29,15 @@ export function serializeBoolean(value: boolean | undefined): string | undefined
  * @returns parsed number
  * @throws {BeerXMLParseError} if the value is not a valid number
  */
-export function parseNumber(value: string | number | undefined, fieldName: string): number | undefined {
-  if (value === undefined) return undefined;
-  
-  const num = typeof value === 'number' ? value : Number(value);
-  if (isNaN(num)) {
-    throw new BeerXMLParseError(`Invalid number for ${fieldName}: ${value}`);
+export function parseNumber(
+  value: string | number | undefined,
+  fieldName: string,
+): number | undefined {
+  if (value === undefined) return undefined
+
+  const num = typeof value === 'number' ? value : Number(value)
+  if (Number.isNaN(num)) {
+    throw new BeerXMLParseError(`Invalid number for ${fieldName}: ${value}`)
   }
-  return num;
+  return num
 }
-
-/**
- * Converts a number to string for XML serialization
- * @param value - number value
- * @returns string representation
- */
-export function serializeNumber(value: number | undefined): number | undefined {
-  return value;
-}
-

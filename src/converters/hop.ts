@@ -1,6 +1,6 @@
-import type { Hop } from '../types/hop.js';
-import type { BeerXMLHop } from '../schemas/hop.js';
-import { parseNumber } from './utils.js';
+import type { BeerXMLHop } from '../schemas/hop.js'
+import type { Hop } from '../types/hop.js'
+import { parseNumber } from './utils.js'
 
 /**
  * Converts BeerXML Hop to TypeScript Hop
@@ -26,7 +26,7 @@ export function hopFromXML(xml: BeerXMLHop): Hop {
     caryophyllene: parseNumber(xml.CARYOPHYLLENE, 'CARYOPHYLLENE'),
     cohumulone: parseNumber(xml.COHUMULONE, 'COHUMULONE'),
     myrcene: parseNumber(xml.MYRCENE, 'MYRCENE'),
-  };
+  }
 }
 
 /**
@@ -53,6 +53,5 @@ export function hopToXML(hop: Hop): BeerXMLHop {
     CARYOPHYLLENE: hop.caryophyllene,
     COHUMULONE: hop.cohumulone,
     MYRCENE: hop.myrcene,
-  };
+  }
 }
-

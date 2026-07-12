@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Style validation
@@ -27,7 +27,6 @@ export const StyleSchema = z.object({
   profile: z.string().optional(),
   ingredients: z.string().optional(),
   examples: z.string().optional(),
-});
+})
 
-export type StyleValidation = z.infer<typeof StyleSchema>;
-
+export type StyleValidation = z.infer<typeof StyleSchema>

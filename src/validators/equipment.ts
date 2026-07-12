@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Equipment validation
@@ -20,7 +20,6 @@ export const EquipmentSchema = z.object({
   topUpKettle: z.number().min(0).optional(),
   hopUtilization: z.number().min(0).max(100).optional(),
   notes: z.string().optional(),
-});
+})
 
-export type EquipmentValidation = z.infer<typeof EquipmentSchema>;
-
+export type EquipmentValidation = z.infer<typeof EquipmentSchema>

@@ -1,8 +1,8 @@
-import { XMLParser } from 'fast-xml-parser';
-import { BeerXMLParseError } from '../errors/index.js';
-import { recipeFromXML } from '../converters/recipe.js';
-import type { Recipe } from '../types/recipe.js';
-import type { BeerXMLRecipe } from '../schemas/recipe.js';
+import { XMLParser } from 'fast-xml-parser'
+import { recipeFromXML } from '../converters/recipe.js'
+import { BeerXMLParseError } from '../errors/index.js'
+import type { BeerXMLRecipe } from '../schemas/recipe.js'
+import type { Recipe } from '../types/recipe.js'
 
 /**
  * XML Parser configuration for BeerXML format
@@ -16,7 +16,48 @@ const parserOptions = {
   trimValues: true,
   ignoreDeclaration: true,
   ignorePiTags: true,
-};
+}
+
+/**
+ * Parses raw BeerXML into a normalized array of BeerXMLRecipe records
+ * @throws {BeerXMLParseError} If the RECIPES/RECIPE structure is missing
+ */
+function extractRecipesData(xml: string): BeerXMLRecipe[] {
+  const parser = new XMLParser(parserOptions)
+  const parsed = parser.parse(xml) as {
+    RECIPES?: { RECIPE?: BeerXMLRecipe | BeerXMLRecipe[] }
+  }
+
+  if (!parsed.RECIPES) {
+    throw new BeerXMLParseError('No RECIPES element found in XML')
+  }
+
+  if (!parsed.RECIPES.RECIPE) {
+    throw new BeerXMLParseError('No RECIPE element found in RECIPES')
+  }
+
+  return Array.isArray(parsed.RECIPES.RECIPE)
+    ? parsed.RECIPES.RECIPE
+    : [parsed.RECIPES.RECIPE]
+}
+
+/**
+ * Runs a parse step, normalizing any thrown error into a BeerXMLParseError
+ * @throws {BeerXMLParseError}
+ */
+function withParseErrorHandling<T>(run: () => T): T {
+  try {
+    return run()
+  } catch (error) {
+    if (error instanceof BeerXMLParseError) {
+      throw error
+    }
+    if (error instanceof Error) {
+      throw new BeerXMLParseError(`Failed to parse XML: ${error.message}`)
+    }
+    throw new BeerXMLParseError('Unknown error occurred while parsing XML')
+  }
+}
 
 /**
  * Parses BeerXML string into a Recipe object
@@ -31,37 +72,15 @@ const parserOptions = {
  * ```
  */
 export function parseRecipe(xml: string): Recipe {
-  try {
-    const parser = new XMLParser(parserOptions);
-    const parsed = parser.parse(xml) as { RECIPES?: { RECIPE?: BeerXMLRecipe | BeerXMLRecipe[] } };
-
-    if (!parsed.RECIPES) {
-      throw new BeerXMLParseError('No RECIPES element found in XML');
-    }
-
-    if (!parsed.RECIPES.RECIPE) {
-      throw new BeerXMLParseError('No RECIPE element found in RECIPES');
-    }
-
-    // Handle both single recipe and array of recipes
-    const recipeData = Array.isArray(parsed.RECIPES.RECIPE)
-      ? parsed.RECIPES.RECIPE[0]
-      : parsed.RECIPES.RECIPE;
+  return withParseErrorHandling(() => {
+    const [recipeData] = extractRecipesData(xml)
 
     if (!recipeData) {
-      throw new BeerXMLParseError('Recipe data is empty');
+      throw new BeerXMLParseError('Recipe data is empty')
     }
 
-    return recipeFromXML(recipeData);
-  } catch (error) {
-    if (error instanceof BeerXMLParseError) {
-      throw error;
-    }
-    if (error instanceof Error) {
-      throw new BeerXMLParseError(`Failed to parse XML: ${error.message}`);
-    }
-    throw new BeerXMLParseError('Unknown error occurred while parsing XML');
-  }
+    return recipeFromXML(recipeData)
+  })
 }
 
 /**
@@ -71,32 +90,7 @@ export function parseRecipe(xml: string): Recipe {
  * @throws {BeerXMLParseError} If XML is malformed or invalid
  */
 export function parseRecipes(xml: string): Recipe[] {
-  try {
-    const parser = new XMLParser(parserOptions);
-    const parsed = parser.parse(xml) as { RECIPES?: { RECIPE?: BeerXMLRecipe | BeerXMLRecipe[] } };
-
-    if (!parsed.RECIPES) {
-      throw new BeerXMLParseError('No RECIPES element found in XML');
-    }
-
-    if (!parsed.RECIPES.RECIPE) {
-      throw new BeerXMLParseError('No RECIPE element found in RECIPES');
-    }
-
-    // Normalize to array
-    const recipesData = Array.isArray(parsed.RECIPES.RECIPE)
-      ? parsed.RECIPES.RECIPE
-      : [parsed.RECIPES.RECIPE];
-
-    return recipesData.map((recipeData) => recipeFromXML(recipeData));
-  } catch (error) {
-    if (error instanceof BeerXMLParseError) {
-      throw error;
-    }
-    if (error instanceof Error) {
-      throw new BeerXMLParseError(`Failed to parse XML: ${error.message}`);
-    }
-    throw new BeerXMLParseError('Unknown error occurred while parsing XML');
-  }
+  return withParseErrorHandling(() =>
+    extractRecipesData(xml).map(recipeFromXML),
+  )
 }
-

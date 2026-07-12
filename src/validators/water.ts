@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 /**
  * Zod schema for Water validation
@@ -15,7 +15,6 @@ export const WaterSchema = z.object({
   magnesium: z.number().min(0, 'Magnesium must be non-negative'),
   ph: z.number().min(0).max(14).optional(),
   notes: z.string().optional(),
-});
+})
 
-export type WaterValidation = z.infer<typeof WaterSchema>;
-
+export type WaterValidation = z.infer<typeof WaterSchema>
